@@ -1,18 +1,17 @@
 import {splitIntoWirds, sum} from './01'
 
+let a: number
+let b: number
+let c: number
+beforeEach(() => {
+    a = 1;
+    b = 2;
+    c = 3;
+})
+
 test('sum should be correct', () => {
-    let a: number
-    let b: number
-    let c: number
-
-    beforeEach(() => {
-        a = 1;
-        b = 3;
-        c = 5;
-    })
-
     const result1 = sum(a, b);
-    a = 100;
+
     const result2 = sum(b, c);
 
     expect(result1).toBe(3);

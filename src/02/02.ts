@@ -1,7 +1,8 @@
-type  studentType = {
+export type  studentType = {
     id: number
     name: string
     age: number
+    isActive: boolean
     family: boolean
     hobby: Array<string>
     adress: adressType
@@ -16,10 +17,11 @@ type tehType = {
     id: number
     title: string
 }
-const student: studentType = {
+export const student: studentType = {
     id: 1,
     name: 'Mikhail',
     age: 30,
+    isActive: false,
     family: true,
     hobby: ["fix bike", "js"],
     adress: {
