@@ -21,7 +21,7 @@ export const moveUserToOtherCity = (u: UserWithLaptop, city: string) => {
     }
 }
 
-export const moveUserToOtherHouse = (u: UserWithLaptop&UserWithBooks, house: number) => {
+export const moveUserToOtherHouse = (u: UserWithLaptop & UserWithBooks, house: number) => {
     return {
         ...u,
         address: {...u, house: house}
@@ -38,12 +38,27 @@ export const upgradeUser = (u: UserWithLaptop, laptop: string) => {
     }
 }
 
-export const addNewBooksToUser = (u: UserWithLaptop&UserWithBooks,
-                                  newBooks:Array<string>) => {
+export const addNewBooksToUser = (u: UserWithLaptop & UserWithBooks,
+                                  newBooks: Array<string>) => {
     return {
         ...u,
         books: [
-            ...u.books,newBooks
+            ...u.books, newBooks
         ]
     }
 }
+
+export const updateBook = (u: UserWithLaptop & UserWithBooks,
+                           oldBook: string,
+                           newBook: string) => ({
+        ...u,
+        books: u.books.map(m => m === oldBook ? newBook : m)
+    }
+)
+
+export const removeBook = (u: UserWithLaptop & UserWithBooks,
+                           bookForDelete: string) => ({
+        ...u,
+        books: u.books.filter(f=>f!==bookForDelete)
+    }
+)

@@ -1,7 +1,7 @@
 import {
     addNewBooksToUser,
     makeHairStyle, moveUserToOtherCity,
-    moveUserToOtherHouse,
+    moveUserToOtherHouse, removeBook, updateBook,
     upgradeUser,
     UserType,
     UserWithBooks,
@@ -57,7 +57,7 @@ test('change house', () => {
         laptop: {
             title: 'ZenBook'
         },
-        books:['html','css','react']
+        books: ['html', 'css', 'react']
     }
     const movedUser = moveUserToOtherHouse(user, 21)
 
@@ -92,7 +92,7 @@ test('upgrade user laptop', () => {
 })
 
 test('add new books to user', () => {
-    let user: UserWithLaptop&UserWithBooks = {
+    let user: UserWithLaptop & UserWithBooks = {
         name: 'Misha',
         hair: 100,
         address: {
@@ -102,10 +102,10 @@ test('add new books to user', () => {
         laptop: {
             title: 'ZenBook'
         },
-        books:['html','css','react']
+        books: ['html', 'css', 'react']
     }
 
-    const userCopy = addNewBooksToUser(user, ['ts','rest api'])
+    const userCopy = addNewBooksToUser(user, ['ts', 'rest api'])
 
 
     expect(user).not.toBe(userCopy)
@@ -116,4 +116,51 @@ test('add new books to user', () => {
     expect(user.books[5]).toBe('rest api')
 })
 
+test('update js to ts', () => {
+    let user: UserWithLaptop & UserWithBooks = {
+        name: 'Misha',
+        hair: 100,
+        address: {
+            city: 'Brest',
+            house: 20
+        },
+        laptop: {
+            title: 'ZenBook'
+        },
+        books: ['html', 'css', 'react', 'js']
+    }
+
+    const userCopy = updateBook(user, 'js', 'ts')
+
+
+    expect(user).not.toBe(userCopy)
+    expect(user.laptop).not.toBe(userCopy.laptop)
+    expect(user.address).toBe(userCopy.address)
+    expect(user.books).toBe(userCopy.books)
+    expect(user.books[2]).toBe('ts')
+})
+
+test('remove  js', () => {
+    let user: UserWithLaptop & UserWithBooks = {
+        name: 'Misha',
+        hair: 100,
+        address: {
+            city: 'Brest',
+            house: 20
+        },
+        laptop: {
+            title: 'ZenBook'
+        },
+        books: ['html', 'css', 'js' , 'react']
+    }
+
+    const userCopy = removeBook(user, 'js', 'ts')
+
+
+    expect(user).not.toBe(userCopy)
+    expect(user.laptop).not.toBe(userCopy.laptop)
+    expect(user.address).toBe(userCopy.address)
+    expect(user.books).toBe(userCopy.books)
+    expect(user.books[2]).toBe('react')
+})
 
