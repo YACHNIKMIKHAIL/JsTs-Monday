@@ -9,6 +9,8 @@ export type LaptopType = {
 export type UserWithLaptop = UserType & { laptop: LaptopType }
 export type UserWithBooks = UserType & { books: Array<string> }
 
+export type WithCompanies = { companies: Array<{ id: number, title: string }> }
+
 export const makeHairStyle = (u: UserType, power: number) => {
     let copy = {...u, hair: u.hair / power}
     return copy
@@ -62,3 +64,8 @@ export const removeBook = (u: UserWithLaptop & UserWithBooks,
         books: u.books.filter(f=>f!==bookForDelete)
     }
 )
+
+export const addNewCompanyToUser = (u:UserWithLaptop & WithCompanies, newCompany:{ id: number, title: string }) => {
+    ({...u,
+    companies: u.companies.push(newCompany)})
+}

@@ -1,11 +1,11 @@
 import {
-    addNewBooksToUser,
+    addNewBooksToUser, addNewCompanyToUser,
     makeHairStyle, moveUserToOtherCity,
     moveUserToOtherHouse, removeBook, updateBook,
     upgradeUser,
     UserType,
     UserWithBooks,
-    UserWithLaptop
+    UserWithLaptop, WithCompanies
 } from "./10_01";
 
 
@@ -59,13 +59,13 @@ test('change house', () => {
         },
         books: ['html', 'css', 'react']
     }
-    const movedUser = moveUserToOtherHouse(user, 21)
+    const movedUser = moveUserToOtherHouse(user, 22)
 
     expect(user).not.toBe(movedUser)
     expect(user.books).toBe(movedUser.books)
     expect(user.laptop).toBe(movedUser.laptop)
     expect(user.address.city).not.toBe(movedUser.address)
-    expect(user.address.house).toBe(22)
+    expect(movedUser.address.house).toBe(22)
 })
 
 
@@ -84,10 +84,10 @@ test('upgrade user laptop', () => {
     const upgradedUserLaptop = upgradeUser(user, 'MacBook')
 
 
-    expect(upgradedUserLaptop.laptop).toBe('MacBook')
+    expect(upgradedUserLaptop.laptop.title).toBe('MacBook')
     expect(user.laptop).not.toBe(upgradedUserLaptop.laptop)
     expect(user.address).toBe(upgradedUserLaptop.address)
-    expect(user.laptop).toBe('ZenBook')
+    expect(user.laptop.title).toBe('ZenBook')
 
 })
 
@@ -109,7 +109,7 @@ test('add new books to user', () => {
 
 
     expect(user).not.toBe(userCopy)
-    expect(user.laptop).not.toBe(userCopy.laptop)
+    expect(user.laptop.title).toBe(userCopy.laptop.title)
     expect(user.address).toBe(userCopy.address)
     expect(user.books).toBe(userCopy.books)
     expect(user.books[4]).toBe('ts')
@@ -134,7 +134,7 @@ test('update js to ts', () => {
 
 
     expect(user).not.toBe(userCopy)
-    expect(user.laptop).not.toBe(userCopy.laptop)
+    expect(user.laptop.title).not.toBe(userCopy.laptop.title)
     expect(user.address).toBe(userCopy.address)
     expect(user.books).toBe(userCopy.books)
     expect(user.books[2]).toBe('ts')
@@ -154,13 +154,38 @@ test('remove  js', () => {
         books: ['html', 'css', 'js' , 'react']
     }
 
-    const userCopy = removeBook(user, 'js', 'ts')
+    const userCopy = removeBook(user, 'js')
 
 
     expect(user).not.toBe(userCopy)
-    expect(user.laptop).not.toBe(userCopy.laptop)
+    expect(user.laptop).toBe(userCopy.laptop)
     expect(user.address).toBe(userCopy.address)
-    expect(user.books).toBe(userCopy.books)
-    expect(user.books[2]).toBe('react')
+    expect(user.books).not.toBe(userCopy.books)
+    expect(user.books[3]).toBe('react')
+})
+
+
+test('add company', () => {
+    let user: UserWithLaptop & WithCompanies = {
+        name: 'Misha',
+        hair: 100,
+        address: {
+            city: 'Brest',
+            house: 20
+        },
+        laptop: {
+            title: 'ZenBook'
+        },
+        companies:[{ id:1,title:'Epam'},{ id:2,title:'Incubator'}],
+
+    }
+
+    const userCopy = addNewCompanyToUser(user, {id:3,title:'Google'})
+
+
+    expect(user).not.toBe(userCopy)
+    expect(user.companies[1]).toBe('Incubator')
+    expect(userCopy.companies[2]).toBe('Google')
+
 })
 
